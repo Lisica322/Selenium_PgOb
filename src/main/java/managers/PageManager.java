@@ -8,9 +8,12 @@ import Pages.*;
  */
 public class PageManager {
 
+    ProductListPage productListPage;
+
     /**
      * Менеджер страничек
      */
+    private static PageManager pageManager;
 
     /**
      * Стартовая страничка
@@ -18,19 +21,13 @@ public class PageManager {
     private HomePage homePage;
 
     /**
-     * Страничка "Посудомоечная машина DEXP M6C7PD белый"
+     * Страничка проверки открытия
      */
-    private DishwasherPage dishwasherPage;
-
-    /**
-     * Страничка меню таблеток для посудомоечной машины
-     */
-    private DishwasherTabletsMenuPage dishwasherTabletsMenuPage;
+    private ProductInfoPage productInfoPage;
 
     /**
      * Страничка таблеток
      */
-    private DishwasherTabletPage dishwasherTabletPage;
     /**
      * Страничка корзины
      */
@@ -38,9 +35,22 @@ public class PageManager {
 
     private InsurancePage insurancePage;
 
-    private BaseProductPage baseProductPage;
 
     private PageManager() {
+    }
+
+    public ProductInfoPage getProductInfoPage() {
+        if (productInfoPage == null) {
+            productInfoPage = new ProductInfoPage();
+        }
+        return productInfoPage;
+    }
+
+    public ProductListPage getProductListPage() {
+        if (productListPage == null) {
+            productListPage = new ProductListPage();
+        }
+        return productListPage;
     }
 
     /**
@@ -48,7 +58,6 @@ public class PageManager {
      *
      * @return PageManager
      */
-
 
 
     public HomePage getHomePage() {
@@ -59,44 +68,25 @@ public class PageManager {
     }
 
 
-    public DishwasherPage getDishwasherPage() {
-        if (dishwasherPage == null){
-            dishwasherPage = new DishwasherPage();
-        }
-        return dishwasherPage;
-    }
-
-    public DishwasherTabletsMenuPage getDishwasherTabletsMenuPage() {
-        if (dishwasherTabletsMenuPage == null){
-            dishwasherTabletsMenuPage = new DishwasherTabletsMenuPage();
-        }
-        return dishwasherTabletsMenuPage;
-    }
-
-    public DishwasherTabletPage getDishwasherTabletPage() {
-        if (dishwasherTabletPage == null){
-            dishwasherTabletPage = new DishwasherTabletPage();
-        }
-        return dishwasherTabletPage;
-    }
-
     public BasketPage getBasketPage() {
-        if (basketPage == null){
+        if (basketPage == null) {
             basketPage = new BasketPage();
         }
         return basketPage;
     }
 
-    public BaseProductPage getBaseProductPage() {
-        if (baseProductPage == null){
-            baseProductPage = new BaseProductPage();
-        }
-        return baseProductPage;
-    }
+
     public InsurancePage getInsurancePage() {
         if (insurancePage == null) {
             insurancePage = new InsurancePage();
         }
         return insurancePage;
+    }
+
+    public static PageManager getPageManager() {
+        if (pageManager == null) {
+            pageManager = new PageManager();
+        }
+        return pageManager;
     }
 }

@@ -5,34 +5,48 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-/**
- * @author Arkadiy_Alaverdyan
- * Класс описывающий страничку страхование путешественников
- */
+import java.util.List;
+
+
 public class InsurancePage extends BasePage {
 
-    @FindBy(xpath = "//span[@itemprop='item']")
+    @FindBy(xpath = "//h1")
     private WebElement title;
 
 
-    @FindBy(xpath = "//*[text()='Оформить онлайн']/../../a[@data-test-id]")
-    private WebElement buttonCheckoutOnline;
+
+    @FindBy(xpath = "//h1")
+    private WebElement subtitle;
+
+    @FindBy(xpath = "//div[@class = 'subcategory']")
+    private List<WebElement> subCategoryMenu;
+
+
+
+    public ProductListPage clickOnSubCategoryMenu(String nameProduct) {
+        for (WebElement menuItem : subCategoryMenu) {
+            if (menuItem.getText().equalsIgnoreCase(nameProduct)) {
+                return pageManager.getProductListPage().checkOpenPage(nameProduct);
+            }
+        }
+        Assertions.fail("Продукт '" + nameProduct + "' не было найдено на стартовой странице!");
+        return pageManager.getProductListPage().checkOpenPage(nameProduct);
+    }
 
     /**
      * Проверка открытия страницы, путём проверки title страницы
      *
      * @return InsurancePage - т.е. остаемся на этой странице
      */
-    public InsurancePage checkOpenInsurancePage(String checkName) {
+    public InsurancePage checkOpenPage(String nameProduct) {
         Assertions.assertEquals("Заголовок отсутствует/не соответствует требуемому",
-                checkName,
+                nameProduct,
                 title.getText());
         return this;
     }
 
-    public BaseProductPage checkoutOnline() {
+    public ProductInfoPage openPreviousPage(String nameProduct) {
         DriverManager.getDriverManager().getDriver().navigate().back();
-//        waitUtilElementToBeClickable(buttonCheckoutOnline).click();
-        return pageManager.getBaseProductPage().checkOpenInsurancePage();
+        return pageManager.getProductInfoPage().checkOpenProductPage(nameProduct);
     }
 }

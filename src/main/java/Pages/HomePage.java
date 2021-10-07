@@ -10,8 +10,8 @@ public class HomePage extends BasePage{
     //менюшка
     @FindBy(xpath = "//div[@class = 'menu-desktop__root']")
     private List<WebElement> menuList;
-    //менюшка БТ
-    @FindBy(xpath = "//a[@class = 'popular-categories__title']")
+    //подменюшка
+    @FindBy(xpath = "//a[@class = '//div[@class = 'products-list__content']']")
     private List<WebElement> menuListAppliances;
 
     @FindBy(xpath = "//*[@class='btn btn-additional']")
@@ -26,7 +26,7 @@ public class HomePage extends BasePage{
 
     public HomePage selectBaseMenu(String nameBaseMenu) {
         for (WebElement menuItem : menuList) {
-            if (menuItem.getText().trim().equalsIgnoreCase(nameBaseMenu)) {
+            if (menuItem.getText()./*trim().equalsIgnoreCase*/contains(nameBaseMenu)) {
                 waitUtilElementToBeClickable(menuItem).click();
                 return this;
             }
@@ -38,17 +38,10 @@ public class HomePage extends BasePage{
             for (WebElement menuItem : menuListAppliances) {
                 if (menuItem.getText().equalsIgnoreCase(nameSubMenu)) {
                     waitUtilElementToBeClickable(menuItem).click();
-                    return pageManager.getInsurancePage().checkOpenInsurancePage(nameSubMenu);
+                    return pageManager.getInsurancePage().checkOpenPage(nameSubMenu);
                 }
             }
             Assertions.fail("Подменю '" + nameSubMenu + "' не было найдено на стартовой странице!");
             return pageManager.getInsurancePage();
         }
   }
-//    public void clickSearch() {
-//        waitUtilElementToBeClickable(searchBar).click();
-//        waitUtilElementToBeClickable(searchBarOk).click();
-//    }
-
-
-
